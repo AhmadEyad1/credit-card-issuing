@@ -1,0 +1,78 @@
+server:
+  port: 8080
+  # enable graceful shutdown for server. This will ensure
+  # that serve will not accept any new connection on the network level
+  shutdown: graceful
+
+spring:
+  application:
+    name: "Credit-Card-Issuing"
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+  datasource:
+    url: jdbc:h2:mem:credit-card-issuing;MODE=MySQL;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=false
+    username: user
+    password: test
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+management:
+  info.java.enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoint.health:
+    probes.enabled: true
+    show-details: always
+  endpoints.web.exposure.include: info,health,prometheus,metrics,loggers
+
+springdoc:
+  version: 1.0
+  title: "Credit Card Issuing System"
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  packagesToScan: com.credit.infrastructure.controller
+  pathsToMatch: /**
+
+# Assuming that the service will be run inside AWS, so IAM role should be used for access permission
+aws:
+  bucket:
+    region: "us-east-1"
+    name: "bank-statements"
+
+# Integration configuration, urls, keys, etc
+integration:
+  back-office:
+    api:
+      url: "https://back-office.api.com" # mock
+  credit-card-processing:
+    api:
+      url: "https://credit-card-processing.api.com" # mock
+  identity-verification:
+    api:
+      url: "https://identity-verification.api.com" # mock
+  employment-verification:
+    api:
+      url: "https://employment-verification.api.com" # mock
+  behavioral-analysis:
+    api:
+      url: "https://behavioral-analysis.api.com" # mock
+  compliance-check:
+    api:
+      url: "https://compliance-check.api.com" # mock
+  risk-evaluation:
+    api:
+      url: "https://risk-evaluation.api.com" # mock

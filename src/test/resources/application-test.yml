@@ -1,0 +1,20 @@
+springdoc:
+  version: 1.0.0
+  title: "Credit Card Issuing System"
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:credit-card-issuing_test;MODE=MySQL;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=false
+    username: test
+    password: test
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+aws:
+  bucket:
+    region: "test-region"
+    name: "bank-statements-test"
